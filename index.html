@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="index1.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <script src="https://unpkg.com/vue@3.0.2"></script>
+    
+    <title>Document</title>
+</head>
+    <body>
+    <main id="app">
+        <!-- <div class="modal-container" id="score-modal"> -->
+        
+        <!-- creating a modal for when quiz ends -->
+        <!-- end of modal of quiz details-->
+        <div class="game-quiz-container" id="score-modal1" v-if="index < count">
+            <div class="game-details-container">
+                <h1>Score : <span id="player-score">{{ correctAnswer }}</span> / <span id="question-number21">{{ questions.length }}</span></h1>
+                <div id="app_app"></div>
+                <h1> Question : <span id="question-number">1</span> / <span id="question-number1">{{ questions.length }}</span></h1>
+            </div>
+
+            <div class="game-question-container">
+                <h1 id="display-question">{{ questions[index]['question'] }}</h1>
+            </div>
+
+            <div class="game-options-container">
+                <button v-for="answer,key in questions[index]['answers']">
+                    <label
+                        v-bind:for="key"
+                        class="option"
+                        :class="{'hover:bg-gray-100 cursor-pointer' : selectedAnswer == ''},
+                        {'bg-success' : key == questions[index]['correctAnswer'] && selectedAnswer != ''},
+                        {'bg-danger' : key != questions[index]['correctAnswer'] && selectedAnswer == key}"
+                    >
+                        <input
+                            type="radio"
+                            :id="key"
+                            class="radio"
+                            :value="key"
+                            @change="answered($event)"
+                            v-model="selectedAnswer"
+                            :disabled="selectedAnswer != ''"
+                        />
+                        {{ answer }}
+                    </label>
+                </button>
+            </div>
+
+            <div class="next-button-container">
+                <button id="next_etap" @click="nextQuestion" v-show="selectedAnswer != '' && index < count">Next Question</button>
+            </div>
+
+        </div>
+
+        <div class="modal-container" id="score-modal" v-else>
+
+            <div class="modal-content-container">
+
+                <test_h1></test_h1>
+
+                <div class="grade-details">
+                    <p>Attempts : {{ questions.length }}</p>
+                    <p>Wrong Answers : <span id="wrong-answers"></span>{{ wrongAnswer }}</p>
+                    <p>Right Answers : <span id="right-answers">{{ correctAnswer }}</span></p>
+                    <p>Grade : <span id="grade-percentage"></span>%</p>
+                    <p ><span id="remarks" style="margin-top:9cm"></span>{{ getPageTitle }}</p>
+                </div>
+
+                <div class="modal-button-container">
+                    <button @click="resetQuiz">Play again</button>
+                </div>
+
+            </div>
+        </div>
+    </main>
+    <script src="index.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+</body>
+
+</html>
